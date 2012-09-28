@@ -5,7 +5,7 @@ namespace :resque do
   task :setup
 
   desc "Start a Resque worker"
-  task :work => [:pidfile, :setup] do
+  task :work => :setup do
     require 'resque'
 
     queues = (ENV['QUEUES'] || ENV['QUEUE']).to_s.split(',')
@@ -25,6 +25,10 @@ namespace :resque do
       end
       Process.daemon(true)
     end
+
+    if ENV['PIDFILE'] 	
+-      File.open(ENV['PIDFILE'], 'w') { |f| f << worker.pid }
+-   end
 
     worker.log "Starting worker #{worker}"
 
