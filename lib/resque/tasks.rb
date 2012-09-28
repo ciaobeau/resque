@@ -26,9 +26,9 @@ namespace :resque do
       Process.daemon(true)
     end
 
-    if ENV['PIDFILE'] 	
--      File.open(ENV['PIDFILE'], 'w') { |f| f << worker.pid }
--   end
+    if ENV['PIDFILE']
+      File.open(ENV['PIDFILE'], 'w') { |f| f << worker.pid }
+    end
 
     worker.log "Starting worker #{worker}"
 
